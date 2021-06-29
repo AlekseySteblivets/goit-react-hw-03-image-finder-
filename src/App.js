@@ -66,7 +66,7 @@ class App extends Component {
 
       window.scrollTo({
         top: document.documentElement.scrollHeight,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
   };
 
