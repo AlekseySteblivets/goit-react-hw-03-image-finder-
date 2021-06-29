@@ -29,10 +29,6 @@ class App extends Component {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.fetchPictures();
     }
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth',
-    });
   }
 
   onChangeQuery = query => {
@@ -44,12 +40,12 @@ class App extends Component {
     });
   };
 
-  onLoadMoreBtnClick = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth',
-    });
-  };
+  // onLoadMoreBtnClick = () => {
+  //   window.scrollTo({
+  //     top: document.documentElement.scrollHeight,
+  //     behavior: 'smooth',
+  //   });
+  // };
 
   fetchPictures = () => {
     const { currentPage, searchQuery } = this.state;
@@ -68,8 +64,10 @@ class App extends Component {
       .catch(error => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
 
-      this.onLoadMoreBtnClick();
-   
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth',
+      });
   };
 
 
