@@ -47,28 +47,59 @@ class App extends Component {
   //   });
   // };
 
+
+
+
   fetchPictures = () => {
     const { currentPage, searchQuery } = this.state;
     const options = { currentPage, searchQuery };
 
     this.setState({ isLoading: true });
-    
+
     picturesApi
       .fetchPictures(options)
-      .then(hits =>
+      .then(hits => {
         this.setState(prevState => ({
           pictures: [...prevState.pictures, ...hits],
           currentPage: prevState.currentPage + 1,
-        })),
-      )
+
+        }));
+        // window.scrollTo({
+        //   top: document.querySelector('.ImageGallery').scrollHeight,
+        //   behavior: "smooth",
+        // });
+      })
       .catch(error => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
 
-      window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: "smooth",
-      });
+
   };
+
+  fetchPicturesLoadMore = () => {
+    const { currentPage, searchQuery } = this.state;
+    const options = { currentPage, searchQuery };
+
+    this.setState({ isLoading: true });
+
+    picturesApi
+      .fetchPictures(options)
+      .then(hits => {
+        this.setState(prevState => ({
+          pictures: [...prevState.pictures, ...hits],
+          currentPage: prevState.currentPage + 1,
+
+        }));
+        window.scrollTo({
+          top: document.querySelector('.ImageGallery').scrollHeight,
+          behavior: "smooth",
+        });
+      })
+      .catch(error => this.setState({ error }))
+      .finally(() => this.setState({ isLoading: false }));
+
+
+  };
+
 
 
 
@@ -107,7 +138,7 @@ class App extends Component {
           />
         )}
 
-        {shouldRenderLoadMoreButton && <Button onClick={this.fetchPictures} />}
+        {shouldRenderLoadMoreButton && <Button onClick={this.fetchPicturesLoadMore} />}
 
         {showModal && (
           <Modal imageUrl={modalPictureUrl} onModalclick={this.toggleModal} />
